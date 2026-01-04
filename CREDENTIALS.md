@@ -31,9 +31,30 @@ ssh root@45.76.29.60
 
 ### 4. Vultr API
 - **API Key:** `SBT7CM7CXAY7CAL6UTSVHQMLHUZN6LG6NTHQ`
-- **Instance ID:** `4a6c6e36-544d-49ca-992f-67a79ba914a0`
+- **Instance ID:** `4a6c6e36-544d-49ca-992f-67a79ba914a0` (destroyed to save costs)
+- **Snapshot ID:** `a2fd2438-2521-41d4-8863-ebf63c0a4e64`
+- **Snapshot Name:** "Ubuntu with VS Code and VNC - Jan 4 2026"
 
 ## Quick Commands
+
+### Restore Instance from Snapshot
+```bash
+# Check snapshot status
+curl -H "Authorization: Bearer SBT7CM7CXAY7CAL6UTSVHQMLHUZN6LG6NTHQ" \
+  "https://api.vultr.com/v2/snapshots/a2fd2438-2521-41d4-8863-ebf63c0a4e64"
+
+# Create new instance from snapshot
+curl -X POST -H "Authorization: Bearer SBT7CM7CXAY7CAL6UTSVHQMLHUZN6LG6NTHQ" \
+  -H "Content-Type: application/json" \
+  -d '{"region":"ord","plan":"vc2-4c-8gb","snapshot_id":"a2fd2438-2521-41d4-8863-ebf63c0a4e64"}' \
+  "https://api.vultr.com/v2/instances"
+```
+
+### Destroy Instance
+```bash
+curl -X DELETE -H "Authorization: Bearer SBT7CM7CXAY7CAL6UTSVHQMLHUZN6LG6NTHQ" \
+  "https://api.vultr.com/v2/instances/YOUR_INSTANCE_ID"
+```
 
 ### Restart VNC Server
 ```bash
